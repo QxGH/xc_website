@@ -1,0 +1,55 @@
+.home {
+  .page-header {
+    height: 720px;
+    position: relative;
+    .btn-box {
+      position: absolute;
+      top: 16px;
+      right: 240px;
+    }
+  }
+  .btn {
+    width: 120px;
+    height: 32px;
+    border-radius: 2px;
+    font-size: 16px;
+    display: inline-block;
+    cursor: pointer;
+  }
+  .white-btn {
+    border: 1px solid #597EF7;
+    color: #597EF7;
+    background: transparent;
+    &:hover {
+      background-color: rgba(89,126,247,.1);
+    }
+  }
+  .blue-btn {
+    border: 1px solid #2589FF;
+    background: #2589FF;
+    color: #fff;
+    &:hover {
+      background: rgba(37,137,255,.9);;
+    }
+  }
+  .btn-item {
+    display: inline-block;
+    margin-right: 24px;
+    width: 120px;
+    height: 100px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  .login {
+    position: relative;
+    .dropdown-list {
+      position: absolute;
+      right: 0;
+      top: 32px;
+      .item {
+        padding-top: 3px;
+      }
+    }
+  }
+}
