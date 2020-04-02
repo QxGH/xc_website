@@ -15,7 +15,7 @@
         @fail="onFail"
         @refresh="onRefresh"
         slider-text="向右拖动滑块填充拼图"
-        :accuracy="1"
+        :accuracy="2"
         ></SlideVerify>
       </div>
     </div>
@@ -37,6 +37,7 @@ export default {
   components: {
     SlideVerify
   },
+  props: ['verifyType'],
   data() {
     return {
       imgs: [img0, img1, img2, img3, img4, img5]
@@ -46,7 +47,7 @@ export default {
     onSuccess() {
       // console.log("验证通过");
       this.$message.success('验证通过')
-      this.$emit('success', true)
+      this.$emit('success', this.verifyType)
     },
     onFail() {
       // console.log("验证不通过");

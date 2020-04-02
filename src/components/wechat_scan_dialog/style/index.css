@@ -1,0 +1,83 @@
+.wechat-scan-dialog {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
+
+.wechat-scan-dialog .dialog-content {
+  width: 320px;
+  background: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.wechat-scan-dialog .dialog-header {
+  height: 30px;
+  line-height: 30px;
+  background-color: #2589FF;
+  color: #fff;
+  text-align: center;
+  position: relative;
+}
+
+.wechat-scan-dialog .dialog-header .icon-box {
+  height: 30px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 0;
+  padding-right: 3px;
+}
+
+.wechat-scan-dialog .dialog-header .icon-item {
+  display: inline-block;
+  height: 30px;
+  padding: 0 3px;
+  cursor: pointer;
+}
+
+.wechat-scan-dialog .dialog-header .icon-item:hover .icon {
+  color: #d9ecff;
+}
+
+.wechat-scan-dialog .dialog-header .icon-item .icon {
+  font-size: 16px;
+  line-height: 30px;
+  color: #fff;
+}
+
+.wechat-scan-dialog .dialog-body {
+  text-align: center;
+  padding: 20px 20px 30px;
+}
+
+.wechat-scan-dialog .dialog-body .title,
+.wechat-scan-dialog .dialog-body .sort {
+  color: #666;
+  font-size: 14px;
+  height: 20px;
+  line-height: 20px;
+}
+
+.wechat-scan-dialog .dialog-body .title {
+  font-weight: bold;
+}
+
+.wechat-scan-dialog .dialog-body .qrcode-box {
+  margin: 10px auto 0;
+  width: 160px;
+  height: 160px;
+  background: #F6F6F6;
+}
+
+.wechat-scan-dialog .dialog-body .sort {
+  margin-top: 10px;
+}

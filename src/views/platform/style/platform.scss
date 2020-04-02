@@ -1,0 +1,141 @@
+.platform {
+  height: 100%;
+  background: #FAFBFF;
+  .page-main {
+    height: calc(100% - 56px);
+    overflow-y: auto;
+    position: relative;
+    .create-tips {
+      position: absolute;
+      top: 38%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      .tips-text {
+        font-size:16px;
+        line-height:20px;
+        color:#999;
+      }
+      .create-tips-btn {
+        margin-top: 20px;
+        width: 120px;
+        height: 32px;
+        background:rgba(37,137,255,1);
+        border-radius: 2px;
+        outline: 0;
+        border: 0;
+        color: #fff;
+        &:hover {
+          opacity: .9;
+        }
+      }
+    }
+    .platform-list {
+      max-width: 1240px;
+      margin: 0 auto;
+      .platform-list-main {
+        padding: 95px 0 50px;
+        position: relative;
+      }
+      .search-box {
+        position: absolute;
+        top: 40px;
+        right: 0;
+        .search-input {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 40px;
+          transition: width .5s;
+          .el-input__inner {
+            border-radius: 20px;
+            padding-right: 8px;
+            border: 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+            &:hover {
+              box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+            }
+          }
+        }
+        .search-btn {
+          position: absolute;
+          top: 0;
+          right: 0;
+          z-index: 9;
+          border: 0;
+          outline: 0;
+          display: block;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background: #fff;
+          color: #C0C4CC;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+          &:hover {
+            box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+          }
+          .search-icon {
+            font-size: 16px;
+          }
+        }
+      }
+      .platform-item {
+        height: 120px;
+        background:rgba(255,255,255,1);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+        opacity: 1;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-bottom: 20px;
+        padding: 28px 20px;
+        position: relative;
+        &:hover {
+          box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+        }
+        .platform-img {
+          width: 64px;
+          height: 64px;
+          overflow: hidden;
+          border-radius: 50%;
+          position: absolute;
+          top: 28px;
+          left: 20px;
+          &.imgRotate {
+            animation: imgRotate .8s;
+          }
+          @keyframes imgRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+          }
+        }
+        .platform-info {
+          padding-left: 80px;
+          .platform-name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 16px;
+            line-height: 22px;
+            height: 22px;
+            margin-top: 7px;
+          }
+          .platform-date {
+            font-size: 14px;
+            height: 20px;
+            line-height: 20px;
+            color: #666;
+            margin-top: 8px;
+          }
+        }
+      }
+    }
+    @media only screen and (max-width: 1240px) {
+      .platform-list {
+        padding: 0 20px;
+      }
+    }
+  }
+  .el-dialog--center .el-dialog__body {
+    padding-bottom: 15px;
+  }
+}

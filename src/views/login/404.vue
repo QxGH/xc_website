@@ -1,12 +1,12 @@
 <template>
-  <div class="shop-list">
-    ShopList
+  <div class="not-found">
+    <h1>404</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ShopList'
+  name: 'NotFound'
 }
 </script>
 

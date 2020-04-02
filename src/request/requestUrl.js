@@ -7,7 +7,7 @@ if(process.env.NODE_ENV == 'development') {
     qiniuUrl: 'https://up.qiniup.com',
     staticUrl: 'https://qiniu.xingchen.cn'
   };
-};
+}
 
 // 测试环境
 if(process.env.NODE_ENV == 'test') {
@@ -25,6 +25,6 @@ if(process.env.NODE_ENV == 'production') {
     qiniuUrl: 'https://up.qiniup.com',
     staticUrl: 'https://qiniu.xingchen.cn'
   };
-};
+}
 
 export default url;

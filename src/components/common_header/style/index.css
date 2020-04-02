@@ -1,0 +1,42 @@
+.common-header {
+  background: #fff;
+  height: 56px;
+  width: 100%;
+}
+
+.common-header .header-main {
+  max-width: 1440px;
+  margin: 0 auto;
+  height: 100%;
+  line-height: 56px;
+}
+
+.common-header .header-main .el-dropdown-link {
+  cursor: pointer;
+  color: #409EFF;
+}
+
+.common-header .header-main .el-icon-arrow-down {
+  font-size: 12px;
+}
+
+.common-header .header-main .create-platform-btn {
+  margin-left: 30px;
+  width: 120px;
+  height: 32px;
+  background: #2589ff;
+  border-radius: 2px;
+  outline: 0;
+  border: 0;
+  color: #fff;
+}
+
+.common-header .header-main .create-platform-btn:hover {
+  opacity: .9;
+}
+
+@media only screen and (max-width: 1440px) {
+  .common-header .header-main {
+    padding: 0 20px;
+  }
+}

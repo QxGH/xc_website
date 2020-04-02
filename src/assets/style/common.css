@@ -23,6 +23,7 @@ ul, ol, li {
 
 button {
   outline: none;
+  cursor: pointer;
 }
 
 img {
