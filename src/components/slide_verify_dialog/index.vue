@@ -46,7 +46,7 @@ export default {
   methods: {
     onSuccess() {
       // console.log("验证通过");
-      this.$message.success('验证通过')
+      // this.$message.success('验证通过')
       this.$emit('success', this.verifyType)
     },
     onFail() {

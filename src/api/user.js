@@ -1,12 +1,57 @@
 import request from '@/request/index';
 
 const user = {
-  login() {
+  register(formData) {
+    // 分类详情
     return request({
-      url: `/login`,
+      url: `business/register`,
       method: 'post',
       source: 'base',
-      tokenType: 'user'
+      data: formData
+    });
+  },
+  sendRegisterCode(formData) {
+    // 分类详情
+    return request({
+      url: `business/register/smsCodeSend`,
+      method: 'post',
+      source: 'base',
+      data: formData
+    });
+  },
+  login(formData) {
+    return request({
+      url: `business/login`,
+      method: 'post',
+      source: 'base',
+      data: formData
+    });
+  },
+  sendLoginCode(formData) {
+    // 分类详情
+    return request({
+      url: `business/login/smsCodeSend`,
+      method: 'post',
+      source: 'base',
+      data: formData
+    });
+  },
+  sendRePwdCode(formData) {
+    // 分类详情
+    return request({
+      url: `business/login/forgetPasswordSmsCodeSend`,
+      method: 'post',
+      source: 'base',
+      data: formData
+    });
+  },
+  resetPassword(formData) {
+    // 分类详情
+    return request({
+      url: `business/login/forgetPassword`,
+      method: 'post',
+      source: 'base',
+      data: formData
     });
   },
   getShopList() {

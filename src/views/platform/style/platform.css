@@ -4,6 +4,7 @@
 }
 
 .platform .page-main {
+  width: 100%;
   height: calc(100% - 56px);
   overflow-y: auto;
   position: relative;

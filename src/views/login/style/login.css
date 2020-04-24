@@ -34,6 +34,8 @@
   flex: 1;
   flex-basis: auto;
   overflow-y: auto;
+  position: relative;
+  z-index: 9;
 }
 
 .login .main .login-cont {
@@ -522,5 +524,17 @@
   }
   .login .main .form-box .form-main .err-info {
     padding-top: 0;
+  }
+}
+
+@media only screen and (max-height: 650px) {
+  .login .main .login-cont {
+    margin: 110px 0 50px;
+  }
+}
+
+@media only screen and (max-height: 472px) {
+  .login .main .login-cont {
+    margin: 130px 0 50px;
   }
 }

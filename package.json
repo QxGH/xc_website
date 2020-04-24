@@ -14,6 +14,7 @@
     "core-js": "^3.6.4",
     "crypto-js": "^4.0.0",
     "element-ui": "^2.13.0",
+    "js-base64": "^2.5.2",
     "js-cookie": "^2.2.1",
     "vue": "^2.6.11",
     "vue-concise-slider": "^3.4.4",

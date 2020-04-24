@@ -1,7 +1,16 @@
 <template>
-  <div class="common-header">
+  <div class="common-header" :class="{'scroll-bottom': scrollBottom}">
     <div class="header-main clearfix">
-      <div class="login-box pull-left">LOGO</div>
+      <div class="login-box pull-left">
+        <div class="svg">
+          <Logo></Logo>
+        </div>
+        <!-- <embed class="svg" width="50" height="48" src="https://cdn.xingchen.cn/69cdc911-6073-4197-8dc1-4ddd8ca3f911" type="image/svg+xml" /> -->
+        <img class="name" src="https://cdn.xingchen.cn/a470a275-49fe-4c4d-9a6c-e3177d5c9be0" alt="">
+        
+        <i class="dot"></i>
+        <span class="slogan">专注用户运营的技术服务商</span>
+      </div>
       <div class="power-box pull-right" v-if="!hideAccount">
         <el-dropdown>
           <span class="el-dropdown-link">
@@ -21,6 +30,7 @@
 
 <script>
 import { getUserInfo, clearCookie } from '@/tools/Cookie'
+import Logo from '@/components/logo'
 
 export default {
   name: "CommonHeader",
@@ -34,14 +44,21 @@ export default {
       default: false
     }
   },
+  components: {
+    Logo
+  },
   data() {
     return {
-      userInfo: {}
+      userInfo: {},
+      scrollBottom: false
     }
   },
   created() {
     let userInfo = getUserInfo();
     this.userInfo = userInfo;
+  },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll, true);
   },
   methods: {
     createPlatform() {
@@ -53,7 +70,18 @@ export default {
     logout() {
       clearCookie()
       this.$router.push('/login')
+    },
+    handleScroll() {
+      let scrollTop = document.getElementById('loginMain').scrollTop
+      if(scrollTop >= 50) {
+        this.scrollBottom = true;
+      } else {
+        this.scrollBottom = false;
+      };
     }
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.handleScroll, true);
   }
 };
 </script>

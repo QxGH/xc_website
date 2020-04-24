@@ -3,7 +3,7 @@
     <header class="login-header">
       <CommonHeader :hideAccount="true"></CommonHeader>
     </header>
-    <div class="main">
+    <div class="main" id="loginMain">
       <div class="login-cont clearfix">
         <div class="banner">
           <slider ref="slider" :options="slider.options">
@@ -48,7 +48,10 @@
             </div>
           </div>
           <div class="tabs-box" v-if="pageType == 'smsLogin' || pageType == 'accountLogin'">
-            <div class="tabs-main clearfix" :class="{'smsActive': tabsName == 'sms', 'accountActive': tabsName == 'account'}">
+            <div
+              class="tabs-main clearfix"
+              :class="{'smsActive': tabsName == 'sms', 'accountActive': tabsName == 'account'}"
+            >
               <div
                 class="tabs-item"
                 :class="{'active': tabsName == 'sms'}"
@@ -253,7 +256,11 @@
                   <button class="login-btn" @click="registHandle">注 册</button>
                 </template>
                 <template v-else-if="pageType == 'retrievePassword'">
-                  <button class="login-btn" style="font-size: 18px;" @click="resetPasswordHandle">重置密码</button>
+                  <button
+                    class="login-btn"
+                    style="font-size: 18px;"
+                    @click="resetPasswordHandle"
+                  >重置密码</button>
                 </template>
                 <template v-else>
                   <button class="login-btn" @click="loginHandle">登 录</button>
@@ -388,7 +395,15 @@ export default {
       sendCodeDisable: false, // 发送验证码 disabled 防止点击
       sendCodeLater: null, // 发送验证码 定时器
       sendCodeTime: 60, // 发送验证码倒计时 时间
-      verifyType: "sendCode", // sendCode  login  // 图片验证类型
+      
+      verifyType: "sendLoginCode", // sendCode  login  // 图片验证类型
+      /** 
+       * @verifyType
+      // sendLoginCode 登录验证码
+      // sendRegistCode 注册验证码
+      // sendBindCode 绑定手机号 验证码
+      // sendRePwdCode 找回密码验证码
+      */
       form: {
         phone: "",
         verifyCode: "",
@@ -432,10 +447,10 @@ export default {
       }
     };
   },
-  created(){
-    if(this.$route.query.type && this.$route.query.type == 'regist') {
-      this.pageType = 'phoneRegist'
-    };
+  created() {
+    if (this.$route.query.type && this.$route.query.type == "regist") {
+      this.pageType = "phoneRegist";
+    }
   },
   methods: {
     lookPwdHandle() {
@@ -494,7 +509,19 @@ export default {
       // 发送验证码
       this.resetFomrRule();
       if (this.testPhone(this.form.phone)) {
-        this.verifyType = "sendCode";
+        if (this.pageType == "smsLogin") {
+          // 短信登录 发送验证码
+          this.verifyType = "sendLoginCode";
+        } else if (this.pageType == "phoneRegist") {
+          // 手机号注册 发送验证码
+          this.verifyType = "sendRegistCode";
+        } else if (this.pageType == "bindPhone") {
+          // 绑定手机号 发送验证码
+          this.verifyType = "sendBindCode";
+        } else if (this.pageType == "retrievePassword") {
+          // 忘记密码 发送验证码
+          this.verifyType = "sendRePwdCode";
+        }
         this.showVerifyDialog = true;
       } else {
         this.formRule.phoneNoTest = true;
@@ -515,7 +542,37 @@ export default {
       }
     },
     regist() {
-      this.$message.success("regist");
+      let formData = {
+        phone: this.form.phone,
+        invite_code: this.form.invitationCode,
+        code: this.form.verifyCode,
+        type: "2"
+      };
+      this.$api.user
+        .register(formData)
+        .then(res => {
+          if (res.data.code === 0) {
+            let resData = res.data.data;
+            // resData = {
+            //   authorize: {
+            //     exp: 1588319874,
+            //     iat: 1587715074,
+            //     nbf: 1587715074,
+            //     token:
+            //       "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImlzcyI6IiIsImF1ZCI6ImxvY2FsaG9zdCIsImp0aSI6IiJ9.eyJpc3MiOiIiLCJhdWQiOiJsb2NhbGhvc3QiLCJqdGkiOiIiLCJpYXQiOjE1ODc3MTUwNzQsIm5iZiI6MTU4NzcxNTA3NCwiZXhwIjoxNTg4MzE5ODc0LCJyb2xlIjoiYnVzaW5lc3MiLCJiaWQiOjIsImJ0b2tlbiI6Ijk2OTJlZmQyMTdiNzg1ZGM3ZGE2NWIxN2NiYWUyYmM0IiwibmFtZSI6IjE3NjkxMzQ4NDU5IiwicGhvbmUiOiIxNzY5MTM0ODQ1OSJ9._FyJfuzNhCKKZGT974kLvCu7WQ2s25LjN-u8yBntJS4"
+            //   },
+            //   btoken: "9692efd217b785dc7da65b17cbae2bc4",
+            //   name: "17691348459",
+            //   phone: "17691348459"
+            // };
+            this.$message.success("注册成功！");
+          } else {
+            this.$message.waring(res.data.message);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     resetPasswordHandle() {
       this.resetFomrRule();
@@ -530,8 +587,25 @@ export default {
       if (this.form.newPassword !== this.form.confirmPassword) {
         this.formRule.confirmPasswordNoTest = true;
         return;
-      }
-      this.$message.success("resetPassword");
+      };
+      let formData = {
+        name: this.form.phone,
+        code: this.form.verifyCode,
+        password: this.form.newPassword
+      };
+      this.$api.user
+        .resetPassword(formData)
+        .then(res => {
+          if (res.data.code === 0) {
+            this.$message.success("密码重置成功！");
+          } else {
+            this.$message.waring(res.data.message);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
     },
     loginHandle() {
       // 登录手柄
@@ -575,25 +649,73 @@ export default {
       }
     },
     login() {
-      this.$api.user.login().then(res => {
-        if (res.data.code === 0) {
-          let resData = res.data.data;
-          Cookies.set("userToken", resData.userToken);
-          Cookies.set("userRoles", AesEncrypt(JSON.stringify(resData.roles)));
-          Cookies.set("userInfo", resData.userInfo);
-          Cookies.set("storeToken", resData.storeToken);
-          this.$message.success("登录成功！");
-          this.$router.push('/platform')
-        } else {
-          this.$message.warning("登录失败！");
+      let formData = {};
+      if(this.pageType == "smsLogin") {
+        // 短信登录
+        formData = {
+          name: this.form.phone,
+          type: '2',
+          password: this.form.verifyCode
+        } 
+      } else if (this.pageType == "accountLogin") {
+        // 密码
+        formData = {
+          name: this.form.account,
+          type: '1',
+          password: this.form.password
         }
-      });
+      };
+
+      this.$api.user
+        .login(formData)
+        .then(res => {
+          if (res.data.code === 0) {
+            let resData = res.data.data;
+            this.$message.success("登录成功！");
+            let userInfo = {
+              name: resData.name,
+              phone: resData.phone,
+              btoken: resData.btoken
+            };
+            let userToken = resData.authorize.token;
+            Cookies.set("userInfo", userInfo);
+            Cookies.set("userToken", userToken);
+            this.$router.push("/platform");
+          } else {
+            this.$message.error(res.data.message);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      // this.$api.user.login().then(res => {
+      //   if (res.data.code === 0) {
+      //     let resData = res.data.data;
+      //     Cookies.set("userToken", resData.userToken);
+      //     Cookies.set("userRoles", AesEncrypt(JSON.stringify(resData.roles)));
+      //     Cookies.set("userInfo", resData.userInfo);
+      //     Cookies.set("storeToken", resData.storeToken);
+      //     this.$message.success("登录成功！");
+      //     this.$router.push("/platform");
+      //   } else {
+      //     this.$message.warning("登录失败！");
+      //   }
+      // });
     },
     verifySuccess(val) {
       // 图形验证成功
       this.showVerifyDialog = false;
-      if (val == "sendCode") {
-        this.getcode();
+      if (val == "sendRegistCode") {
+        this.startCodeLater();
+        this.getRegistCode();
+      } else if (val == "sendLoginCode") {
+        // 获取登录验证码
+        this.startCodeLater();
+        this.getLoginCode();
+      } else if (val == "sendRePwdCode") {
+        // 忘记密码 验证码
+        this.startCodeLater();
+        this.getRePwdCode();
       } else if (val == "login") {
         this.login();
       }
@@ -601,7 +723,7 @@ export default {
     addCustomerHandle() {
       this.customerDialog = true;
     },
-    getcode() {
+    startCodeLater() {
       if (this.sendCodeLater) {
         clearInterval(this.sendCodeLater);
         this.sendCodeLater = null;
@@ -619,6 +741,60 @@ export default {
           this.sendCodeLater = null;
         }
       }, 1000);
+    },
+    getRegistCode() {
+      // 手机号注册 获取 验证码
+      let formData = {
+        phone: this.form.phone
+      };
+      this.$api.user
+        .sendRegisterCode(formData)
+        .then(res => {
+          if (res.data.code === 0) {
+            this.$message.success("短信验证码发送成功！");
+          } else {
+            this.$message.error("短信验证码发送失败！");
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getLoginCode() {
+      // 手机号登录 获取 验证码
+      let formData = {
+        name: this.form.phone
+      };
+      this.$api.user
+        .sendLoginCode(formData)
+        .then(res => {
+          if (res.data.code === 0) {
+            this.$message.success("短信验证码发送成功！");
+          } else {
+            this.$message.error("短信验证码发送失败！");
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getRePwdCode() {
+      // 找回密码 验证码
+      let formData = {
+        name: this.form.phone
+      };
+      this.$api.user
+        .sendRePwdCode(formData)
+        .then(res => {
+          if (res.data.code === 0) {
+            this.$message.success("短信验证码发送成功！");
+          } else {
+            this.$message.error("短信验证码发送失败！");
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     //验证时间倒计时
     getCodeText: function() {

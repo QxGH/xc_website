@@ -2,6 +2,71 @@
   background: #fff;
   height: 56px;
   width: 100%;
+  position: relative;
+  z-index: 89;
+  box-shadow: 0 0 4px rgba(0,0,0,.1);
+  &.scroll-bottom {
+    box-shadow: 0 0 4px rgba(0,0,0,.3);
+  }
+  .login-box {
+    width: 300px;
+    height: 56px;
+    .svg {
+      display: inline-block;
+      vertical-align: middle;
+      height: 48px;
+      width: 28px;
+      margin-right: 10px;
+    }
+    .name {
+      display: inline-block;
+      height: 28px;
+      vertical-align: middle;
+    }
+    .slogan {
+      display: inline-block;
+      margin-left: 10px;
+      font-size: 14px;
+      color: #1e4a93;
+      vertical-align: middle;
+      opacity: .8;
+    }
+    .dot {
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      background: #1e4a93;
+      vertical-align: middle;
+      border-radius: 50%;
+      margin-left: 10px;
+    }
+    
+  }
+  @media only screen and (max-width: 750px) {
+    .login-box {
+      width: 110px;
+      .slogan {
+        display: none;
+      }
+      .dot {
+        display: none;
+      }
+    }
+  }
+  @media only screen and (max-width: 375px) {
+    .login-box {
+      width: 60px;
+      .name {
+        display: none;
+      }
+      .slogan {
+        display: none;
+      }
+      .dot {
+        display: none;
+      }
+    }
+  }
   .header-main {
     max-width: 1440px;
     margin: 0 auto;
